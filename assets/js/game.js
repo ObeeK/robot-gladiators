@@ -75,6 +75,7 @@ var startGame = function() {
       if (playerInfo.health > 0) {
         // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
         window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
+        
 
         // pick new enemy to fight based on the index of the enemy.names array
         var pickedEnemyObj = enemyInfo[i];
@@ -153,8 +154,18 @@ var randomNumber = function(min, max) {
   return value;
 };
 
+var getPlayerName = function() {
+  var name = "";
+
+  while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+  console.log("Your robot's name is " + name);
+  return name;
+};
+
 var playerInfo = {
-  name: window.prompt("What is your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
@@ -202,18 +213,3 @@ var enemyInfo = [
   //start the game when the page loads
   startGame();
 
-// When the player is defeated or there are no more enemies, call an 
-// endGame() function that:
-// Alerts the player's total stats
-// Asks the player if they want to pay again
-// If yes, call startGame() to restart the game
-
-//After the player skips or defeats an enemy (and there are still more robots to fight):
-//Ask the player if they want to "shop"
-//If no, continue as normal
-//If Yes, call the shop() function
-//In the shop() function, ask player if they want to "refill" health, "upgrade" attack, or "leave" the shop
-//If refill, subtract money points from player and increase health
-//If upgrae, subtract money points from player and increase attack power
-//If leave, alert goodbye and exit the function
-//If any other invalid option, call shop() again
