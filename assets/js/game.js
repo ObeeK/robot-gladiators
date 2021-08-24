@@ -1,18 +1,20 @@
 
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
 
+  return value;
+};
 
-
-// wrap the game in a startGame() function
-
-// fight function (now with parameter for enemy's name)
-var fight = function(enemy) {
+var fightOrSkip = function () {
+  var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
   
-    while (playerInfo.health > 0 && enemy.health > 0) {
-      // ask player if they'd like to fight or run
-      var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-  
+    if (promptFight === "" || promptFight === null) {
+      window.alert("You need to provide a valid answer! Please try again.");
+      return fightOrSkip();
+    }
+    promptFight = promptFight.toLowerCase();
       // if player picks "skip" confirm and then stop the loop
-      if (promptFight === "skip" || promptFight === "SKIP") {
+      if (promptFight === "skip") {
         // confirm player wants to skip
         var confirmSkip = window.confirm("Are you sure you'd like to quit?");
   
@@ -22,9 +24,22 @@ var fight = function(enemy) {
           // subtract money from playerInfo.money for skipping
           playerInfo.money = Math.max(0, playerInfo.money - 10);
           console.log("playerInfo.money", playerInfo.money)
-          break;
+          return true;
         }
       }
+      return false;
+};
+
+// fight function (now with parameter for enemy's name)
+var fight = function(enemy) {
+  
+    while (playerInfo.health > 0 && enemy.health > 0) {
+      // ask player if they'd like to fight or run
+      if (fightOrSkip()) {
+        break;
+      }
+      
+      
   
       // remove enemy's health by subtracting the amount set in the playerInfo.attack variable
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -148,11 +163,6 @@ var shop = function () {
   }
 }
 
-var randomNumber = function(min, max) {
-  var value = Math.floor(Math.random() * (max - min + 1) + min);
-
-  return value;
-};
 
 var getPlayerName = function() {
   var name = "";
